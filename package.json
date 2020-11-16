@@ -1,0 +1,41 @@
+{
+  "name": "creating-a-router",
+  "version": "1.0.0",
+  "description": "A simple router implementation",
+  "private": true,
+  "scripts": {
+    "start": "webpack serve",
+    "build": "webpack --mode production"
+  },
+  "main": "dist/router.js",
+  "module": "/src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbusquet/create-a-router.git"
+  },
+  "keywords": [
+    "react",
+    "router"
+  ],
+  "author": "Ricardo Busquet <me@rbusquet.dev>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rbusquet/create-a-router/issues"
+  },
+  "homepage": "https://github.com/rbusquet/create-a-router#readme",
+  "dependencies": {
+    "@types/react": "^16.9.56",
+    "@types/react-dom": "^16.9.9",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^4.5.0",
+    "ts-loader": "^8.0.11",
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0",
+    "typescript": "^4.0.5"
+  }
+}
