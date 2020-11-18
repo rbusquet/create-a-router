@@ -1,7 +1,6 @@
-import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
-import { Route, Link, Redirect } from "./Router";
+import { Route, Link, Redirect } from "../Router";
 
 const pathGenerator = () => `/path_${Math.random().toString(36).substring(7)}`;
 

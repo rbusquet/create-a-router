@@ -4,18 +4,18 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = (env, argv) => ({
   mode: argv.mode || "development",
   entry: {
-    router: "./src/index.ts",
+    index: "./src/index.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
-    library: "[name]",
     libraryTarget: "umd",
   },
   plugins: [new CleanWebpackPlugin()],
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".json"],
   },
+  devtool: "source-map",
   module: {
     rules: [
       // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
