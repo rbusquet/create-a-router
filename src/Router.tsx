@@ -1,31 +1,12 @@
-import type {
-  ComponentType,
-  ReactElement,
-  MutableRefObject,
-  PropsWithChildren,
-  MouseEvent,
-} from "react";
+import type { MutableRefObject, MouseEvent, FC } from "react";
 import { useState, useRef, useEffect, createElement } from "react";
-
-interface Match {
-  url: string;
-  path: string | null;
-  isExact: boolean;
-}
-
-interface Options {
-  path?: string;
-  exact?: boolean;
-}
-
-interface ComponentProps {
-  match: Match;
-}
-
-interface RouteProps extends Options {
-  component?: ComponentType<ComponentProps>;
-  render?(props: ComponentProps): ReactElement;
-}
+import type {
+  Options,
+  Match,
+  RouteProps,
+  LinkProps,
+  RedirectProps,
+} from "./types";
 
 function matchPath(pathname: string, options: Options): Match | null {
   const { exact = false, path } = options;
@@ -56,14 +37,14 @@ function matchPath(pathname: string, options: Options): Match | null {
   };
 }
 
-let instances: MutableRefObject<{ forceUpdate(): void }>[] = [];
+const instances: MutableRefObject<{ forceUpdate(): void }>[] = [];
 
 const register = (comp: MutableRefObject<{ forceUpdate(): void }>) =>
   instances.push(comp);
 const unregister = (comp: MutableRefObject<{ forceUpdate(): void }>) =>
   instances.splice(instances.indexOf(comp), 1);
 
-export function Route({ path, exact, component, render }: RouteProps) {
+export const Route: FC<RouteProps> = ({ path, exact, component, render }) => {
   const [pathname, setPathName] = useState(() => window.location.pathname);
 
   const ref = useRef({
@@ -94,17 +75,7 @@ export function Route({ path, exact, component, render }: RouteProps) {
   if (component) return createElement(component, { match });
   if (render) return render({ match });
   return null;
-}
-
-interface LinkProps {
-  to: string;
-  replace?: boolean;
-}
-
-interface RedirectProps {
-  to: string;
-  push: boolean;
-}
+};
 
 const historyPush = (path: string) => {
   history.pushState({}, "title", path);
@@ -116,11 +87,7 @@ const historyReplace = (path: string) => {
   instances.forEach((instance) => instance.current.forceUpdate());
 };
 
-export function Link({
-  replace = false,
-  to,
-  children,
-}: PropsWithChildren<LinkProps>) {
+export const Link: FC<LinkProps> = ({ replace = false, to, children }) => {
   function handleClick(ev: MouseEvent<HTMLAnchorElement>) {
     ev.preventDefault();
     replace ? historyReplace(to) : historyPush(to);
@@ -130,11 +97,11 @@ export function Link({
       {children}
     </a>
   );
-}
+};
 
-export function Redirect({ to, push }: PropsWithChildren<RedirectProps>) {
+export const Redirect: FC<RedirectProps> = ({ to, push }) => {
   useEffect(() => {
     push ? historyPush(to) : historyReplace(to);
   });
   return null;
-}
+};

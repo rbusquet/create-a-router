@@ -1,19 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 import { Route, Link } from "../src/Router";
 
-type TopicTypes = { topicId: string };
-type MatchTypes = {
-  match: {
-    url: string;
-    path: string | null;
-  };
-};
-
 const Home = () => <h2>Home</h2>;
+
 const About = () => <h2>About</h2>;
+
+type TopicTypes = { topicId: string };
 const Topic = ({ topicId }: TopicTypes) => <h3>{topicId}</h3>;
 
-const Topics = ({ match }: MatchTypes) => {
+const Topics = ({ match }) => {
   const items = [
     { name: "Rendering with React", slug: "rendering" },
     { name: "Components", slug: "components" },
@@ -46,7 +41,7 @@ const Topics = ({ match }: MatchTypes) => {
   );
 };
 
-export default function App() {
+const App: FC = () => {
   return (
     <div>
       <ul>
@@ -68,4 +63,6 @@ export default function App() {
       <Route path="/topics" component={Topics} />
     </div>
   );
-}
+};
+
+export default App;
