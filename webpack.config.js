@@ -5,12 +5,11 @@ const { env } = require("process");
 
 module.exports = ["source-map"].map((devtool) => ({
   mode: "development",
-  entry: "./src/index.ts",
+  entry: "./src/index.tsx",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "router.js",
-    library: "router",
-    libraryTarget: "umd",
+    libraryTarget: 'umd',
+    library: 'route-test'
   },
   devtool,
   devServer: {
@@ -26,5 +25,4 @@ module.exports = ["source-map"].map((devtool) => ({
       { test: /\.tsx?$/, use: ["ts-loader"], exclude: /node_modules/ },
     ],
   },
-  externals: [/^react.*$/],
 }));
