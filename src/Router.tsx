@@ -1,4 +1,11 @@
-import React from "react";
+import type {
+  ComponentType,
+  ReactElement,
+  MutableRefObject,
+  PropsWithChildren,
+  MouseEvent,
+} from "react";
+import { useState, useRef, useEffect, createElement } from "react";
 
 interface Match {
   url: string;
@@ -16,8 +23,8 @@ interface ComponentProps {
 }
 
 interface RouteProps extends Options {
-  component?: React.ComponentType<ComponentProps>;
-  render?(props: ComponentProps): React.ReactElement;
+  component?: ComponentType<ComponentProps>;
+  render?(props: ComponentProps): ReactElement;
 }
 
 function matchPath(pathname: string, options: Options): Match | null {
@@ -49,32 +56,30 @@ function matchPath(pathname: string, options: Options): Match | null {
   };
 }
 
-let instances: React.MutableRefObject<{ forceUpdate(): void }>[] = [];
+let instances: MutableRefObject<{ forceUpdate(): void }>[] = [];
 
-const register = (comp: React.MutableRefObject<{ forceUpdate(): void }>) =>
+const register = (comp: MutableRefObject<{ forceUpdate(): void }>) =>
   instances.push(comp);
-const unregister = (comp: React.MutableRefObject<{ forceUpdate(): void }>) =>
+const unregister = (comp: MutableRefObject<{ forceUpdate(): void }>) =>
   instances.splice(instances.indexOf(comp), 1);
 
 export function Route({ path, exact, component, render }: RouteProps) {
-  const [pathname, setPathName] = React.useState(
-    () => window.location.pathname
-  );
+  const [pathname, setPathName] = useState(() => window.location.pathname);
 
-  const ref = React.useRef({
+  const ref = useRef({
     forceUpdate() {
       setPathName(window.location.pathname);
     },
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     register(ref);
     return () => {
       unregister(ref);
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handler = () => {
       setPathName(window.location.pathname);
     };
@@ -86,7 +91,7 @@ export function Route({ path, exact, component, render }: RouteProps) {
   if (!match) {
     return null;
   }
-  if (component) return React.createElement(component, { match });
+  if (component) return createElement(component, { match });
   if (render) return render({ match });
   return null;
 }
@@ -112,11 +117,11 @@ const historyReplace = (path: string) => {
 };
 
 export function Link({
-  replace,
+  replace = false,
   to,
   children,
-}: React.PropsWithChildren<LinkProps>) {
-  function handleClick(ev: React.MouseEvent<HTMLAnchorElement>) {
+}: PropsWithChildren<LinkProps>) {
+  function handleClick(ev: MouseEvent<HTMLAnchorElement>) {
     ev.preventDefault();
     replace ? historyReplace(to) : historyPush(to);
   }
@@ -127,8 +132,8 @@ export function Link({
   );
 }
 
-export function Redirect({ to, push }: React.PropsWithChildren<RedirectProps>) {
-  React.useEffect(() => {
+export function Redirect({ to, push }: PropsWithChildren<RedirectProps>) {
+  useEffect(() => {
     push ? historyPush(to) : historyReplace(to);
   });
   return null;

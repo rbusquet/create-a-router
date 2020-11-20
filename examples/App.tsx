@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Link } from "../Router";
+import { Route, Link } from "../src/Router";
 
 type TopicTypes = { topicId: string };
 type MatchTypes = {

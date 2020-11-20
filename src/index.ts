@@ -1,1 +1,1 @@
-export * from "./Router";
+export { Route, Link, Redirect } from "./Router";

@@ -1,41 +1,46 @@
 {
   "name": "creating-a-router",
   "version": "1.0.0",
-  "description": "A simple router implementation",
   "private": true,
-  "scripts": {
-    "start": "webpack serve",
-    "build": "webpack --mode production"
-  },
-  "main": "dist/router.js",
-  "module": "/src/index.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rbusquet/create-a-router.git"
-  },
+  "description": "A simple router implementation",
   "keywords": [
     "react",
     "router"
   ],
-  "author": "Ricardo Busquet <me@rbusquet.dev>",
-  "license": "MIT",
+  "homepage": "https://github.com/rbusquet/create-a-router#readme",
   "bugs": {
     "url": "https://github.com/rbusquet/create-a-router/issues"
   },
-  "homepage": "https://github.com/rbusquet/create-a-router#readme",
-  "dependencies": {
-    "@types/react": "^16.9.56",
-    "@types/react-dom": "^16.9.9",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbusquet/create-a-router.git"
+  },
+  "license": "MIT",
+  "author": "Ricardo Busquet <me@rbusquet.dev>",
+  "main": "dist/router.js",
+  "module": "/src/index.ts",
+  "scripts": {
+    "build": "webpack --mode production",
+    "test": "jest"
   },
   "devDependencies": {
+    "@jedmao/location": "^3.0.0",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.1",
+    "@testing-library/user-event": "^12.2.2",
+    "@types/react": "^16.14.0",
+    "@types/react-dom": "^16.9.9",
     "clean-webpack-plugin": "^3.0.0",
-    "html-webpack-plugin": "^4.5.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.0",
+    "ts-jest": "^26.4.4",
     "ts-loader": "^8.0.11",
+    "typescript": "^4.1.2",
     "webpack": "^5.4.0",
-    "webpack-cli": "^4.2.0",
-    "webpack-dev-server": "^3.11.0",
-    "typescript": "^4.0.5"
+    "webpack-cli": "^4.2.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }

@@ -1,20 +1,16 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const { env } = require("process");
 
-module.exports = ["source-map"].map((devtool) => ({
-  mode: "development",
-  entry: "./src/index.ts",
+module.exports = (env, argv) => ({
+  mode: argv.mode || "development",
+  entry: {
+    router: "./src/index.ts",
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "router.js",
-    library: "router",
+    filename: "[name].js",
+    library: "[name]",
     libraryTarget: "umd",
-  },
-  devtool,
-  devServer: {
-    contentBase: "./dist",
   },
   plugins: [new CleanWebpackPlugin()],
   resolve: {
@@ -23,8 +19,16 @@ module.exports = ["source-map"].map((devtool) => ({
   module: {
     rules: [
       // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
-      { test: /\.tsx?$/, use: ["ts-loader"], exclude: /node_modules/ },
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader",
+        options: {
+          configFile:
+            argv.mode === "production" ? "tsconfig.json" : "tsconfig.dev.json",
+        },
+        exclude: /node_modules/,
+      },
     ],
   },
   externals: [/^react.*$/],
-}));
+});
