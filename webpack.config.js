@@ -3,21 +3,26 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { env } = require("process");
 
-module.exports = ["source-map"].map((devtool) => ({
+module.exports = {
   mode: "development",
-  entry: "./src/index.tsx",
+  entry: {
+    index: "./src/index.tsx",
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
-    libraryTarget: 'umd',
-    library: 'route-test'
+    filename: "[name].js",
+    library: "[name]",
+    libraryTarget: "umd",
+    globalObject: "this",
+    umdNamedDefine: true,
   },
-  devtool,
   devServer: {
     contentBase: "./dist",
   },
   plugins: [new CleanWebpackPlugin()],
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".json"],
+    modules: ["node_modules"],
   },
   module: {
     rules: [
@@ -25,4 +30,4 @@ module.exports = ["source-map"].map((devtool) => ({
       { test: /\.tsx?$/, use: ["ts-loader"], exclude: /node_modules/ },
     ],
   },
-}));
+};
