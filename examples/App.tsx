@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { Route, Link } from "../src/Router";
+import { Match } from "../src/types";
 
 const Home = () => <h2>Home</h2>;
 
@@ -8,7 +9,7 @@ const About = () => <h2>About</h2>;
 type TopicTypes = { topicId: string };
 const Topic = ({ topicId }: TopicTypes) => <h3>{topicId}</h3>;
 
-const Topics = ({ match }) => {
+const Topics = ({ match }: { match: Match }) => {
   const items = [
     { name: "Rendering with React", slug: "rendering" },
     { name: "Components", slug: "components" },
